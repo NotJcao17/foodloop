@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  /* FoodLoop palette */
+  --color-primary:    #2D7A4F;
+  --color-primary-dark: #1d5c3b;
+  --color-secondary:  #3AA76D;
+  --color-background: #F9FAFB;
+  --color-surface:    #FFFFFF;
+  --color-text:       #1E2A3A;
+  --color-muted:      #6B7280;
+  --color-danger:     #EF4444;
+  --color-warning:    #F59E0B;
+  --color-border:     #E5E7EB;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --background: #F9FAFB;
+  --foreground: #1E2A3A;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar thin */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }

@@ -1,0 +1,36 @@
+import { NextRequest, NextResponse } from "next/server";
+import { generateStorageTips } from "@/lib/gemini";
+import { createClient } from "@/lib/supabase/server";
+
+const rateLimitMap = new Map<string, number[]>();
+
+function isRateLimited(userId: string): boolean {
+  const now = Date.now();
+  const timestamps = (rateLimitMap.get(userId) ?? []).filter(t => now - t < 60_000);
+  if (timestamps.length >= 10) return true;
+  rateLimitMap.set(userId, [...timestamps, now]);
+  return false;
+}
+
+export async function POST(req: NextRequest) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+
+  if (isRateLimited(user.id)) {
+    return NextResponse.json({ error: "Límite de solicitudes alcanzado. Espera un momento." }, { status: 429 });
+  }
+
+  const { food } = await req.json();
+  if (!food?.trim()) {
+    return NextResponse.json({ error: "Debes ingresar un alimento" }, { status: 400 });
+  }
+
+  try {
+    const tips = await generateStorageTips(food);
+    return NextResponse.json(tips);
+  } catch (e: any) {
+    console.error("Gemini storage error:", e?.message ?? e);
+    return NextResponse.json({ error: "Error al obtener consejos: " + (e?.message ?? "desconocido") }, { status: 500 });
+  }
+}
