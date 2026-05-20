@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FoodLoop
 
-## Getting Started
+**FoodLoop** es una red social PWA para reducir el desperdicio de alimentos en comunidades universitarias. Los usuarios publican comida próxima a vencer, otros la reclaman antes de que expire, y coordinan la entrega por chat en tiempo real. Una IA integrada sugiere recetas y consejos de conservación para aprovechar al máximo cada ingrediente.
 
-First, run the development server:
+Desarrollado por el equipo **Cypher Cosmos** para DevWeek 26.
+
+---
+
+## Características
+
+- **Feed de publicaciones** — Lista de alimentos disponibles con filtros: expiran hoy, gratuitos, de cafetería.
+- **Publicar alimento** — Foto, descripción, fecha de vencimiento, tipo de oferta (gratuito o precio simbólico) y punto de recojo.
+- **Reclamar y chatear** — Al reclamar un alimento se abre un chat en tiempo real entre el publicador y el reclamante.
+- **Asistente IA** — Genera recetas a partir de ingredientes disponibles y tips de conservación, usando Gemini.
+- **Notificaciones** — Alertas en tiempo real cuando alguien reclama tu publicación.
+- **Perfiles** — Usuario regular o cafetería, con avatar y historial de actividad.
+- **PWA** — Instalable en móvil y escritorio, funciona como app nativa.
+
+---
+
+## Stack tecnológico
+
+| Capa | Tecnología |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Lenguaje | TypeScript |
+| Estilos | Tailwind CSS v4 |
+| Base de datos | Supabase (PostgreSQL + RLS) |
+| Autenticación | Supabase Auth (email/contraseña) |
+| Storage | Supabase Storage |
+| Tiempo real | Supabase Realtime |
+| IA | Google Gemini (`gemini-3.1-flash-lite`) |
+| Deploy | Vercel |
+
+---
+
+## Instalación local
+
+### Requisitos previos
+
+- Node.js 18+
+- Una cuenta de [Supabase](https://supabase.com) con proyecto creado
+- Una API Key de [Google AI Studio](https://aistudio.google.com)
+
+### Pasos
+
+1. **Clonar el repositorio**
+
+```bash
+git clone <url-del-repo>
+cd foodloop
+```
+
+2. **Instalar dependencias**
+
+```bash
+npm install
+```
+
+3. **Configurar variables de entorno**
+
+Crea un archivo `.env.local` en la raíz del proyecto:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
+SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
+GEMINI_API_KEY=tu_gemini_api_key
+```
+
+4. **Configurar la base de datos**
+
+Ejecuta el esquema SQL incluido en `supabase/schema.sql` desde el editor SQL de Supabase. Asegúrate de tener los buckets de Storage creados: `post-images` y `avatars` (ambos públicos).
+
+5. **Correr en desarrollo**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Uso
 
-## Learn More
+1. **Registro** — Crea una cuenta indicando tu nombre y tipo de usuario (persona o cafetería).
+2. **Feed** — Navega las publicaciones disponibles. Usa los filtros para ver solo las que expiran hoy, las gratuitas o las de cafeterías.
+3. **Publicar** — Toca el botón `+` en la barra inferior, sube una foto, completa los datos y publica.
+4. **Reclamar** — En el detalle de una publicación toca **Quiero esto**. Se abre un chat directo con el publicador para coordinar la entrega.
+5. **IA** — Ve a la sección **IA** desde el menú. Escribe los ingredientes que tienes o el alimento que quieres conservar y obtén sugerencias al instante.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estructura del proyecto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── (auth)/          # Login y registro
+│   ├── (app)/           # Páginas protegidas (feed, chat, IA, perfil)
+│   └── api/             # API Routes (auth, posts, claims, IA)
+├── components/
+│   ├── feature/         # Componentes de dominio (PostCard, ChatPanel, etc.)
+│   └── ui/              # Componentes base reutilizables
+└── lib/
+    ├── supabase/        # Clientes server y browser
+    ├── gemini.ts        # Wrapper de la API de Gemini
+    └── types.ts         # Tipos TypeScript del dominio
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Equipo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Cypher Cosmos** — DevWeek 26
+
+---
+
+## Licencia
+
+MIT
