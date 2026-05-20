@@ -26,7 +26,7 @@ export default async function ChatPage({ params }: { params: Promise<{ claimId: 
   const isParticipant = user.id === claimAny.claimer_id || user.id === post?.user_id;
   if (!isParticipant) redirect("/feed");
 
-  const otherPerson = user.id === claim.claimer_id ? postOwner : claimer;
+  const otherPerson = user.id === claimAny.claimer_id ? postOwner : claimer;
 
   // Load initial messages
   const { data: initialMessages } = await supabase
