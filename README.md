@@ -4,6 +4,9 @@
 
 Desarrollado por el equipo **Cypher Cosmos** para DevWeek 26.
 
+Puedes probar la demo aquí:
+[![Demo en vivo](https://img.shields.io/badge/demo-live-brightgreen)](https://foodloop-one.vercel.app)
+
 ---
 
 ## Características
@@ -114,9 +117,3 @@ src/
 ## Equipo
 
 **Cypher Cosmos** — DevWeek 26
-
----
-
-## Licencia
-
-MIT
