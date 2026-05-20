@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
     // que Supabase infiera `never` en queries con joins. No bloquea el build.
     ignoreBuildErrors: true,
   },
+  experimental: {
+    turbo: {
+      // Limita la memoria que usa Turbopack en desarrollo
+      memoryLimit: 512 * 1024 * 1024, // 512 MB
+    },
+  },
 };
 
 export default nextConfig;
