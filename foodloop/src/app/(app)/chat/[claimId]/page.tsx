@@ -18,11 +18,12 @@ export default async function ChatPage({ params }: { params: Promise<{ claimId: 
 
   if (!claim) notFound();
 
-  const post = claim.posts as any;
-  const postOwner = post?.profiles as any;
-  const claimer = claim.profiles as any;
+  const claimAny = claim as any;
+  const post = claimAny.posts;
+  const postOwner = post?.profiles;
+  const claimer = claimAny.profiles;
 
-  const isParticipant = user.id === claim.claimer_id || user.id === post?.user_id;
+  const isParticipant = user.id === claimAny.claimer_id || user.id === post?.user_id;
   if (!isParticipant) redirect("/feed");
 
   const otherPerson = user.id === claim.claimer_id ? postOwner : claimer;
