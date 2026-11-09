@@ -1,119 +1,165 @@
+<div align="center">
+
+<img src="foodloop/public/icons/icon-192.png" width="88" alt="FoodLoop logo">
+
 # FoodLoop
 
-**FoodLoop** es una red social PWA para reducir el desperdicio de alimentos en comunidades universitarias. Los usuarios publican comida próxima a vencer, otros la reclaman antes de que expire, y coordinan la entrega por chat en tiempo real. Una IA integrada sugiere recetas y consejos de conservación para aprovechar al máximo cada ingrediente.
+**Share food before it goes to waste.**
 
-Desarrollado por el equipo **Cypher Cosmos** para DevWeek 26.
+*A PWA where a university community posts food that is about to expire, someone claims it, and they arrange the pickup in a real-time chat. An AI chef suggests recipes and storage tips for what you have.*
 
-Puedes probar la demo aquí:
-[![Demo en vivo](https://img.shields.io/badge/demo-live-brightgreen)](https://foodloop-one.vercel.app)
+<a href="https://foodloop-one.vercel.app"><img src="https://img.shields.io/badge/Demo-foodloop--one.vercel.app-2E7D4F?style=for-the-badge" alt="Demo at foodloop-one.vercel.app"></a>
 
----
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Supabase](https://img.shields.io/badge/Supabase-Auth%20·%20DB%20·%20Realtime-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com)
+[![Gemini](https://img.shields.io/badge/Google-Gemini-8E75B2?logo=googlegemini&logoColor=white)](https://ai.google.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Hackathon](https://img.shields.io/badge/Hackathon-DevWeek%2026-F59E0B)](#-team)
 
-## Características
+<br>
 
-- **Feed de publicaciones** — Lista de alimentos disponibles con filtros: expiran hoy, gratuitos, de cafetería.
-- **Publicar alimento** — Foto, descripción, fecha de vencimiento, tipo de oferta (gratuito o precio simbólico) y punto de recojo.
-- **Reclamar y chatear** — Al reclamar un alimento se abre un chat en tiempo real entre el publicador y el reclamante.
-- **Asistente IA** — Genera recetas a partir de ingredientes disponibles y tips de conservación, usando Gemini.
-- **Notificaciones** — Alertas en tiempo real cuando alguien reclama tu publicación.
-- **Perfiles** — Usuario regular o cafetería, con avatar y historial de actividad.
-- **PWA** — Instalable en móvil y escritorio, funciona como app nativa.
+<img src="docs/screenshots/feed.webp" height="420" alt="Feed of available food">&nbsp;
+<img src="docs/screenshots/post.webp" height="420" alt="Food detail with the claim button">&nbsp;
+<img src="docs/screenshots/chat.webp" height="420" alt="Real-time chat to arrange the pickup">&nbsp;
+<img src="docs/screenshots/ai.webp" height="420" alt="AI chef">
 
----
-
-## Stack tecnológico
-
-| Capa | Tecnología |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Lenguaje | TypeScript |
-| Estilos | Tailwind CSS v4 |
-| Base de datos | Supabase (PostgreSQL + RLS) |
-| Autenticación | Supabase Auth (email/contraseña) |
-| Storage | Supabase Storage |
-| Tiempo real | Supabase Realtime |
-| IA | Google Gemini (`gemini-3.1-flash-lite`) |
-| Deploy | Vercel |
+</div>
 
 ---
 
-## Instalación local
+## What is FoodLoop?
 
-### Requisitos previos
+On a campus, food gets thrown away every day: the cafeteria's leftover bread, fruit someone bought too
+much of, ingredients that expire before anyone cooks them. **FoodLoop** connects that food with
+someone who can use it:
 
-- Node.js 18+
-- Una cuenta de [Supabase](https://supabase.com) con proyecto creado
-- Una API Key de [Google AI Studio](https://aistudio.google.com)
+1. 📸 **Post** the food with a photo, expiration date, pickup point and whether it is free or has a
+   symbolic price.
+2. 🙋 **Claim** it from the feed before it expires.
+3. 💬 **Chat** with the other person in real time to arrange the pickup.
+4. ✅ **Mark it as delivered** and it counts as food saved on your profile.
 
-### Pasos
+Built in a hackathon by team **Cypher Cosmos** for **DevWeek 26**. The interface is in Spanish.
 
-1. **Clonar el repositorio**
+> **Note:** the demo runs on Supabase's free tier, which pauses inactive projects, so the live site
+> may only show the login screen. The screenshots below were taken from a local run with demo data.
 
-```bash
-git clone <url-del-repo>
-cd foodloop
+---
+
+## 📸 Screenshots
+
+<div align="center">
+
+<img src="docs/screenshots/login.webp" height="420" alt="Login">&nbsp;
+<img src="docs/screenshots/register.webp" height="420" alt="Sign up as student or cafeteria">&nbsp;
+<img src="docs/screenshots/new-post.webp" height="420" alt="New post form">&nbsp;
+<img src="docs/screenshots/post-claimed.webp" height="420" alt="A claimed post with the link to the chat">
+
+<br><br>
+
+<img src="docs/screenshots/notifications.webp" height="420" alt="Notifications">&nbsp;
+<img src="docs/screenshots/profile.webp" height="420" alt="Profile with active posts and history">
+
+</div>
+
+---
+
+## ✨ Features
+
+- 🥗 **Feed** of available food sorted by expiration date, with filters: *expiring soon*, *free* and
+  *from the cafeteria*, and a countdown badge on each card.
+- 📸 **Post food** with a photo (Supabase Storage), description, expiration date, pickup point and
+  offer type: **free** or **symbolic price**.
+- 🙋 **Claim** a post with one tap; it disappears from the feed so nobody else goes for it.
+- 💬 **Real-time chat** between the person who posted and the one who claimed, with Supabase Realtime.
+- 🔔 **Notifications** in real time when someone claims your food or sends you a message, generated by
+  database triggers, with an unread counter on the bell.
+- 🤖 **AI chef (Gemini)**:
+  - **Recipes**: write what you have in the fridge and get a recipe that uses it.
+  - **Storage**: ask how to keep a food fresh for longer.
+- 👤 **Profiles** for students and cafeterias, with avatar, active posts, history and a
+  *food saved* counter.
+- ✅ **Post lifecycle**: available → claimed → delivered (or expired).
+- 📱 **PWA**: installable on phone and desktop, made mobile first.
+- 🔐 **Row-level security** in PostgreSQL so each user can only change what is theirs.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | Next.js 16 (App Router, Server Components, Route Handlers) |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS 4 |
+| **Database** | Supabase PostgreSQL with RLS and triggers |
+| **Auth** | Supabase Auth (email and password) with `@supabase/ssr` |
+| **Storage** | Supabase Storage (`post-images`, `avatars`) |
+| **Real time** | Supabase Realtime (chat and notifications) |
+| **AI** | Google Gemini (`gemini-3.1-flash-lite`) |
+| **Hosting** | Vercel |
+
+---
+
+## 🏗️ Project Structure
+
+```
+foodloop/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/          # login, register
+│   │   ├── (app)/           # feed, feed/[id], new-post, chat/[claimId], notifications, profile, ai
+│   │   └── api/             # auth (profile), ai (recipe, storage)
+│   ├── components/
+│   │   ├── feature/         # PostCard, FeedFilters, ClaimButton, ChatPanel, NotificationBell…
+│   │   └── ui/              # Base components
+│   ├── lib/
+│   │   ├── supabase/        # Server and browser clients
+│   │   ├── gemini.ts        # Gemini wrapper
+│   │   └── types.ts         # Domain types
+│   └── middleware.ts        # Session refresh and route protection
+├── supabase/
+│   ├── schema.sql           # Tables, enums, RLS, triggers
+│   └── seed.sql             # Sample data
+└── public/                  # PWA manifest, icons and service worker
 ```
 
-2. **Instalar dependencias**
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A [Supabase](https://supabase.com) project
+- A [Google AI Studio](https://aistudio.google.com) API key
+
+### Setup
 
 ```bash
+git clone https://github.com/NotJcao17/foodloop.git
+cd foodloop/foodloop
 npm install
 ```
 
-3. **Configurar variables de entorno**
-
-Crea un archivo `.env.local` en la raíz del proyecto:
+Create `.env.local`:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
-SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
-GEMINI_API_KEY=tu_gemini_api_key
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
-4. **Configurar la base de datos**
-
-Ejecuta el esquema SQL incluido en `supabase/schema.sql` desde el editor SQL de Supabase. Asegúrate de tener los buckets de Storage creados: `post-images` y `avatars` (ambos públicos).
-
-5. **Correr en desarrollo**
+Run `supabase/schema.sql` in the Supabase SQL editor and create two **public** Storage buckets:
+`post-images` and `avatars`. Then:
 
 ```bash
-npm run dev
-```
-
-Abre [http://localhost:3000](http://localhost:3000).
-
----
-
-## Uso
-
-1. **Registro** — Crea una cuenta indicando tu nombre y tipo de usuario (persona o cafetería).
-2. **Feed** — Navega las publicaciones disponibles. Usa los filtros para ver solo las que expiran hoy, las gratuitas o las de cafeterías.
-3. **Publicar** — Toca el botón `+` en la barra inferior, sube una foto, completa los datos y publica.
-4. **Reclamar** — En el detalle de una publicación toca **Quiero esto**. Se abre un chat directo con el publicador para coordinar la entrega.
-5. **IA** — Ve a la sección **IA** desde el menú. Escribe los ingredientes que tienes o el alimento que quieres conservar y obtén sugerencias al instante.
-
----
-
-## Estructura del proyecto
-
-```
-src/
-├── app/
-│   ├── (auth)/          # Login y registro
-│   ├── (app)/           # Páginas protegidas (feed, chat, IA, perfil)
-│   └── api/             # API Routes (auth, posts, claims, IA)
-├── components/
-│   ├── feature/         # Componentes de dominio (PostCard, ChatPanel, etc.)
-│   └── ui/              # Componentes base reutilizables
-└── lib/
-    ├── supabase/        # Clientes server y browser
-    ├── gemini.ts        # Wrapper de la API de Gemini
-    └── types.ts         # Tipos TypeScript del dominio
+npm run dev        # http://localhost:3000
 ```
 
 ---
 
-## Equipo
+## 👥 Team
 
-**Cypher Cosmos** — DevWeek 26
+**Cypher Cosmos** · DevWeek 26
